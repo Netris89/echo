@@ -3,8 +3,8 @@
 	"tasks": [
 		{
 			"type": "cppbuild",
-			"label": "C/C++: g++.exe générer le fichier actif",
-			"command": "C:\\msys64\\mingw64\\bin\\g++.exe",
+			"label": "C/C++: clang++.exe générer le fichier actif",
+			"command": "clang++",
 			"args": [
 				"-fdiagnostics-color=always",
 				"-g",
@@ -25,7 +25,7 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"detail": "compilateur : \"C:\\msys64\\mingw64\\bin\\gcc.exe\""
+			"detail": "compilateur : \"C:\\msys64\\clang64\\bin\\clang++.exe\""
 		}
 	]
 }
