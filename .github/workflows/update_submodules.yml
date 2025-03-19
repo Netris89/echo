@@ -1,0 +1,41 @@
+name: Update Submodules
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-submodules:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  # Permet de push les changements
+
+    steps:
+      - name: Checkout Projet-integration
+        uses: actions/checkout@v4
+        with:
+          repository: Netris89/Utilities
+          token: ${{ secrets.TOKEN }}
+          submodules: true
+          persist-credentials: false
+
+      - name: Configure Git Credentials
+        run: |
+          git config --global url."https://${{ secrets.TOKEN }}@github.com/".insteadOf "https://github.com/"
+
+      - name: Set Git Identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Update submodules
+        run: |
+            git -C . fetch
+            git -C . submodule sync --recursive
+            git -C . submodule update --init --recursive --remote
+            git -C . add .
+            git -C . commit -m "Auto-update submodules" || echo "No changes to commit"
+            git -C . push origin main
+
