@@ -2,30 +2,31 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"type": "cppbuild",
-			"label": "C/C++: clang++.exe générer le fichier actif",
-			"command": "clang++",
+			"label": "CMake Configure",
+			"type": "shell",
+			"command": "cmake",
 			"args": [
-				"-fdiagnostics-color=always",
-				"-g",
-				"-Wall",
-				"-Wextra",
-				"src\\*",
-				"-Iinc",
-				"-o",
-				"bin\\${workspaceFolderBasename}.exe"
+				"-S",
+				".",
+				"-B",
+				"./bin",
+				"-DCMAKE_EXPORT_COMPILE_COMMANDS=1"
 			],
-			"options": {
-				"cwd": "${workspaceFolder}"
-			},
-			"problemMatcher": [
-				"$gcc"
+			"detail": "Generated task for configuring with CMake"
+		},
+		{
+			"label": "CMake Build",
+			"type": "shell",
+			"command": "cmake",
+			"args": [
+				"--build",
+				"${workspaceFolder}/bin"
 			],
 			"group": {
 				"kind": "build",
 				"isDefault": true
 			},
-			"detail": "compilateur : \"C:\\msys64\\clang64\\bin\\clang++.exe\""
+			"detail": "Generated task for building with CMake"
 		}
 	]
 }
