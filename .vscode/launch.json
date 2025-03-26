@@ -10,7 +10,7 @@
             "cwd": "${workspaceFolder}",
             "terminal": "integrated",
             "stopOnEntry": false,
-            "preLaunchTask": "CMake Build"
+            "preLaunchTask": "CMake: build"
         }
     ]
 }
