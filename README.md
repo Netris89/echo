@@ -1,76 +1,38 @@
-# Echo C++ Project
+# Echo
 
-A simple `echo` program written in C++ that mimics the behavior of the traditional `echo` command in Unix-based systems. This program takes a string input and prints it to the console.
+> [!NOTE]
+> This is a small project created for practicing and improving my C++ skills. It is not intended for production use, but rather as a personal learning tool.
+
+A simple implementation of the `echo` command line utility with support for the `-n` option to prevent a newline. 
 
 ## Features
 
-- Prints a string to the console.
-- Handles basic command-line arguments like the `echo` command.
+- Outputs command-line arguments.
+- Supports the `-n` option to suppress the newline character at the end.
 
-## Requirements
+## Prerequisites
 
-- C++20 compatible compiler (e.g., Clang, GCC)
-- CMake (version 3.10 or higher)
+- A modern C++ compiler (C++11 or later).
 
 ## Installation
 
-### Clone the repository
-
-To get started, clone the repository to your local machine using the following command:
+Clone the repository and compile the project with:
 
 ```sh
-git clone https://github.com/Netris89/Utilities.git
-cd Utilities
-```
-
-### Build the project
-
-#### Install dependencies
-Ensure you have a C++20 compatible compiler (e.g., Clang or GCC) and CMake installed. For example:
-
-- On Ubuntu:
-
-```sh
-sudo apt update
-sudo apt install clang cmake
-```
-
-- On macOS:
-
-```sh
-brew install clang cmake
-```
-
-### Build using CMake
-After cloning the repository, create a build directory and build the project using CMake:
-
-```sh
-mkdir bin
-cd bin
+git clone https://github.com/Netris89/echo
+mkdir build
+cd build
 cmake ..
-cmake --build .
 ```
 
-### Run the program
-Once the build is complete, you can find the compiled executable in the bin/ directory. To run it:
+## Usage
 
+| Option | Description |
+|--------|-------------|
+| `-n` | Show help messageSuppress the newline at the end of the output |
+
+### Exemples :
 ```sh
-./bin/echo "Hello, World!"
+./echo Hello World
+./echo -n Hello World
 ```
-
-### Usage
-
-```sh
-./bin/echo [options] <string>
-```
-
-Prints the string to the console, just like the echo command.   
-The string can contain multiple words and will be printed as it is.   
-
-### Example:
-
-    ./bin/echo "Hello, World!"
-
-This will output:
-
-    Hello, World!
