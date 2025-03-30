@@ -9,4 +9,4 @@ include_directories(${PROJECT_SOURCE_DIR}/inc)
 
 add_executable(echo ${PROJECT_SOURCE_DIR}/src/main.cpp)
 
-set_target_properties(echo PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+set_target_properties(echo PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
