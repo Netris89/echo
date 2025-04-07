@@ -37,7 +37,7 @@ auto Parser::ParseArgument(string argument) -> string
      */
     string arg = move(argument);
     string parsedArg;
-    int iterator = 0;
+    int next = 0;
 
     /*
      * 1. **Loop through the input string**:
@@ -45,6 +45,7 @@ auto Parser::ParseArgument(string argument) -> string
      */
     for (char character : arg)
     {
+        next++;
         /*
          * 2. **Detect escape sequences**:
          *    - Whenever you encounter a backslash (`'\\'`), check the next character to determine if it's part of an escape sequence.
@@ -64,46 +65,46 @@ auto Parser::ParseArgument(string argument) -> string
              *      - `\v` → Vertical tab
              *      - `\\` → Backslash (it’s just a backslash)
              */
-            switch (arg.at(iterator + 1))
+            switch (arg.at(next))
             {
             case 'a':
                 parsedArg += '\a';
-                iterator++;
+                next++;
                 break;
             case 'b':
                 parsedArg += '\b';
-                iterator++;
+                next++;
                 break;
             case 'f':
                 parsedArg += '\f';
-                iterator++;
+                next++;
                 break;
             case 'n':
                 parsedArg += '\n';
-                iterator++;
+                next++;
                 break;
             case 'r':
                 parsedArg += '\r';
-                iterator++;
+                next++;
                 break;
             case 't':
                 parsedArg += '\t';
-                iterator++;
+                next++;
                 break;
             case 'v':
                 parsedArg += '\v';
-                iterator++;
+                next++;
                 break;
             case '\\':
                 parsedArg += '\\';
-                iterator++;
+                next++;
                 break;
                 /*     *    - **Octal escape sequences** (`\0num`):
                  *      - If the sequence starts with `\0`, interpret the following digits as an octal value (up to 3 digits, from `000` to `377`).
                  *      - Convert the octal value into its corresponding byte (e.g., `\012` becomes `'\n'`, `\123` becomes `'S'`).
                  */
             default:
-                iterator++;
+                next++;
                 break;
             }
         }
