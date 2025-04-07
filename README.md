@@ -13,6 +13,7 @@ A simple implementation of the `echo` command line utility with support for the 
 ## Prerequisites
 
 - A modern C++ compiler (C++11 or later).
+- vcpkg
 
 ## Installation
 
@@ -29,7 +30,14 @@ cmake ..
 
 | Option | Description |
 |--------|-------------|
-| `-n` | Show help messageSuppress the newline at the end of the output |
+| \a | Prints a Alert  |
+| \b | Prints a backspace |
+| \n | Prints a newline |
+| \t | Prints a tab |
+| \r | Prints a carriage return |
+| \v | Prints a aertical tab |
+| \\ | Prints a Backslash |
+| \0num | Prints an 8-bit octal value |
 
 ### Exemples :
 ```sh
