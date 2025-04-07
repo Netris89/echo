@@ -41,9 +41,8 @@ using std::vector;
 
 auto main(int argc, char* argv[]) -> int
 {
-    vector<char*> arguments(argv, argv + argc); // Create a vector of arguments from command-line inputs
-    Parser parser = *new Parser();
-
+    vector<string> arguments(argv + 1, argv + argc); // Create a vector of arguments from command-line inputs
+    
     // Check if no arguments are provided (argc <= 1 means no input string)
     if (argc <= 1)
     {
@@ -52,11 +51,11 @@ auto main(int argc, char* argv[]) -> int
     }
 
     // Output the strings (arguments) passed after the options
-    for (int i = 1; i < argc; i++)
+    for (const string& argument : arguments)
     {
-        cout << parser.ParseArgument(arguments.at(i));
+        cout << Parser::ParseArgument(argument);
         
-        if (i < argc - 1)
+        if (argument == arguments.back())
         {
             cout << " ";
         }

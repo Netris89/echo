@@ -1,3 +1,5 @@
+#pragma Once;
+
 #include <string>
 
 class Parser
@@ -5,5 +7,5 @@ class Parser
 private:
 public:
     Parser();
-    auto ParseArgument(char*) -> std::string;
+    auto static ParseArgument(std::string ) -> std::string;
 };
