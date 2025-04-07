@@ -1,7 +1,7 @@
 #include <cstddef>
 #include <string>
 
-#include "../inc/Parser.hpp"
+#include "../include/Parser.hpp"
 
 using std::string;
 
