@@ -7,9 +7,7 @@
 using std::move;
 using std::string;
 
-Parser::Parser()
-{
-}
+Parser::Parser() = default;
 
 auto Parser::ParseArgument(string argument) -> string
 {
@@ -45,7 +43,7 @@ auto Parser::ParseArgument(string argument) -> string
      */
     for (char character : arg)
     {
-        next += 2;
+        next++;
         /*
          * 2. **Detect escape sequences**:
          *    - Whenever you encounter a backslash (`'\\'`), check the next character to determine if it's part of an escape sequence.
@@ -69,42 +67,42 @@ auto Parser::ParseArgument(string argument) -> string
             {
             case 'a':
                 parsedArg += '\a';
-                next += 2;
+                next++;
                 break;
             case 'b':
                 parsedArg += '\b';
-                next += 2;
+                next++;
                 break;
             case 'f':
                 parsedArg += '\f';
-                next += 2;
+                next++;
                 break;
             case 'n':
                 parsedArg += '\n';
-                next += 2;
+                next++;
                 break;
             case 'r':
                 parsedArg += '\r';
-                next += 2;
+                next++;
                 break;
             case 't':
                 parsedArg += '\t';
-                next += 2;
+                next++;
                 break;
             case 'v':
                 parsedArg += '\v';
-                next += 2;
+                next++;
                 break;
             case '\\':
                 parsedArg += '\\';
-                next += 2;
+                next++;
                 break;
-                /*     *    - **Octal escape sequences** (`\0num`):
+                /*      - **Octal escape sequences** (`\0num`):
                  *      - If the sequence starts with `\0`, interpret the following digits as an octal value (up to 3 digits, from `000` to `377`).
                  *      - Convert the octal value into its corresponding byte (e.g., `\012` becomes `'\n'`, `\123` becomes `'S'`).
                  */
             default:
-                next += 2;
+                next++;
                 break;
             }
         }
