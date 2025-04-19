@@ -4,8 +4,8 @@
 
 #include "../include/Parser.hpp"
 
-using std::string;
 using std::move;
+using std::string;
 
 Parser::Parser()
 {
@@ -45,7 +45,7 @@ auto Parser::ParseArgument(string argument) -> string
      */
     for (char character : arg)
     {
-        next++;
+        next += 2;
         /*
          * 2. **Detect escape sequences**:
          *    - Whenever you encounter a backslash (`'\\'`), check the next character to determine if it's part of an escape sequence.
@@ -69,48 +69,48 @@ auto Parser::ParseArgument(string argument) -> string
             {
             case 'a':
                 parsedArg += '\a';
-                next++;
+                next += 2;
                 break;
             case 'b':
                 parsedArg += '\b';
-                next++;
+                next += 2;
                 break;
             case 'f':
                 parsedArg += '\f';
-                next++;
+                next += 2;
                 break;
             case 'n':
                 parsedArg += '\n';
-                next++;
+                next += 2;
                 break;
             case 'r':
                 parsedArg += '\r';
-                next++;
+                next += 2;
                 break;
             case 't':
                 parsedArg += '\t';
-                next++;
+                next += 2;
                 break;
             case 'v':
                 parsedArg += '\v';
-                next++;
+                next += 2;
                 break;
             case '\\':
                 parsedArg += '\\';
-                next++;
+                next += 2;
                 break;
                 /*     *    - **Octal escape sequences** (`\0num`):
                  *      - If the sequence starts with `\0`, interpret the following digits as an octal value (up to 3 digits, from `000` to `377`).
                  *      - Convert the octal value into its corresponding byte (e.g., `\012` becomes `'\n'`, `\123` becomes `'S'`).
                  */
             default:
-                next++;
+                next += 2;
                 break;
             }
         }
         else
         {
-            return arg;
+            parsedArg += character;
         }
     }
 
