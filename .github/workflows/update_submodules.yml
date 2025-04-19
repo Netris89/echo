@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write  # Permet de push les changements
+      contents: write
 
     steps:
       - name: Checkout Projet-integration
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
         with:
           repository: Netris89/Utilities
           token: ${{ secrets.TOKEN }}
