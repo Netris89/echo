@@ -25,17 +25,19 @@ set_target_properties(echo PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_
 
 # Enable testing in the project (required for CTest and GoogleTest integration)
 enable_testing()
+include(GoogleTest)
+
+# Create the test executable
+add_executable(testParser "${PROJECT_SOURCE_DIR}/test/testParser.cpp")
 
 # Include GoogleTest headers and libraries installed via MSYS
 include_directories(/mingw64/include)
 link_directories(/mingw64/lib)
-    
-# # Create the test executable
-add_executable(test_parser "${PROJECT_SOURCE_DIR}/test/testParser.cpp")
+
+set_target_properties(testParser PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
 
 # Link with GoogleTest
-target_link_libraries(test_parser PRIVATE parser_lib gtest gtest_main)
+target_link_libraries(testParser PRIVATE parser_lib gtest gtest_main)
 
 # # Automatically discover tests from the test executable (requires gtest_main)
-include(GoogleTest)
-gtest_discover_tests(test_parser)
+gtest_discover_tests(testParser)
