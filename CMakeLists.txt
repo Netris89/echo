@@ -14,9 +14,6 @@ file(GLOB SOURCES "${PROJECT_SOURCE_DIR}/source/*.cpp")
 # Add the 'include' directory to the list of header search paths
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
-# Create a library target to reuse in the the test target
-add_library(parser_lib ${SOURCES})
-
 # Create the executable target for your main program
 add_executable(echo ${SOURCES})
 
@@ -33,6 +30,9 @@ set_target_properties(echo PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_
 # # Include GoogleTest headers and libraries installed via MSYS
 # include_directories(/mingw64/include)
 # link_directories(/mingw64/lib)
+
+# Create a library target to reuse in the the test target
+# add_library(parser_lib ${SOURCES})
 
 # set_target_properties(testParser PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
 
