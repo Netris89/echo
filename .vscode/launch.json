@@ -6,7 +6,7 @@
             "type": "lldb",
             "request": "launch",
             "program": "${workspaceFolder}/build/${workspaceFolderBasename}.exe",
-            "args": [],
+            "args": ["\\0123"],
             "cwd": "${workspaceFolder}",
             "terminal": "integrated",
             "stopOnEntry": false,

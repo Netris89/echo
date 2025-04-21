@@ -13,7 +13,7 @@ auto Parser::ParseArgument(string argument) -> string
 {
     string arg = move(argument);
     string parsedArg;
-    int next     = 0;
+    int next = 0;
 
     for (char character : arg)
     {
@@ -47,6 +47,8 @@ auto Parser::ParseArgument(string argument) -> string
             case '\\':
                 parsedArg += '\\';
                 break;
+            case '0':
+                parsedArg = ParseOctal(arg);
             default:
                 break;
             }
@@ -56,6 +58,14 @@ auto Parser::ParseArgument(string argument) -> string
             parsedArg += character;
         }
     }
+
+    return parsedArg;
+}
+
+auto Parser::ParseOctal(string argument) -> string
+{
+    string arg = move(argument);
+    string parsedArg = "test";
 
     return parsedArg;
 }

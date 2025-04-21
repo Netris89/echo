@@ -5,6 +5,8 @@
 class Parser
 {
 private:
+    auto static ParseOctal(std::string) -> std::string;
+
 public:
     Parser();
 
@@ -43,5 +45,5 @@ public:
      *
      * @see https://en.cppreference.com/w/cpp/language/escape for a list of standard escape sequences.
      */
-    auto static ParseArgument(std::string ) -> std::string;
+    auto static ParseArgument(std::string) -> std::string;
 };
