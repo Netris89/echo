@@ -5,6 +5,17 @@
 class Parser
 {
 private:
+    /**
+     * @brief Parses a string representing an octal number and returns the corresponding ASCII character.
+     *
+     * This method takes a string that starts with a prefix (e.g., "0o" or similar), removes the prefix,
+     * converts the remaining part from octal to decimal, and returns the corresponding ASCII character as a string.
+     *
+     * @param argument A string containing an octal number prefixed (e.g., "0o101").
+     * @return A string containing the ASCII character corresponding to the octal value.
+     *
+     * @note The input string must be properly formatted; otherwise, this method may throw an exception.
+     */
     auto static ParseOctal(std::string) -> std::string;
 
 public:

@@ -4,7 +4,10 @@
 
 #include "../include/Parser.hpp"
 
+#define OCTAL 8
+
 using std::move;
+using std::stoi;
 using std::string;
 
 Parser::Parser() = default;
@@ -65,7 +68,13 @@ auto Parser::ParseArgument(string argument) -> string
 auto Parser::ParseOctal(string argument) -> string
 {
     string arg = move(argument);
-    string parsedArg = "test";
+    string parsedArg;
+    int decimal = 0;
+
+    arg.erase(0, 2);
+
+    decimal   = stoi(arg, nullptr, OCTAL);
+    parsedArg = static_cast<char>(decimal);
 
     return parsedArg;
 }
