@@ -1,62 +1,68 @@
 #include <cstddef>
 #include <string>
-#include <utility>
 
 #include "../include/Parser.hpp"
 
 #define OCTAL 8
 
-using std::move;
 using std::stoi;
 using std::string;
 
-Parser::Parser() = default;
+Parser::Parser() : next(0) {};
 
-auto Parser::ParseArgument(string argument) -> string
+auto Parser::ParseEscapeCharacter(const string& argument) const -> string
 {
-    string arg = move(argument);
     string parsedArg;
-    int next = 0;
 
-    for (char character : arg)
+    switch (argument.at(next))
+    {
+    case 'a':
+        parsedArg += '\a';
+        break;
+    case 'b':
+        parsedArg += '\b';
+        break;
+    case 'f':
+        parsedArg += '\f';
+        break;
+    case 'n':
+        parsedArg += '\n';
+        break;
+    case 'r':
+        parsedArg += '\r';
+        break;
+    case 't':
+        parsedArg += '\t';
+        break;
+    case 'v':
+        parsedArg += '\v';
+        break;
+    case '\\':
+        parsedArg += '\\';
+        break;
+    case '0':
+        parsedArg += ParseOctal(argument);
+    default:
+        break;
+    }
+
+    return parsedArg;
+}
+
+auto Parser::ParseArgument(const string& argument) -> string
+{
+    string parsedArg;
+    next = 0;
+
+    for (char character : argument)
     {
         next++;
 
         if (character == '\\')
         {
-            switch (arg.at(next))
-            {
-            case 'a':
-                parsedArg += '\a';
-                break;
-            case 'b':
-                parsedArg += '\b';
-                break;
-            case 'f':
-                parsedArg += '\f';
-                break;
-            case 'n':
-                parsedArg += '\n';
-                break;
-            case 'r':
-                parsedArg += '\r';
-                break;
-            case 't':
-                parsedArg += '\t';
-                break;
-            case 'v':
-                parsedArg += '\v';
-                break;
-            case '\\':
-                parsedArg += '\\';
-                break;
-            case '0':
-                parsedArg = ParseOctal(arg);
-            default:
-                break;
-            }
+            parsedArg = ParseEscapeCharacter(argument);
         }
-        else if (arg.front() != '\\')
+        else if (argument.front() != '\\')
         {
             parsedArg += character;
         }
@@ -65,9 +71,9 @@ auto Parser::ParseArgument(string argument) -> string
     return parsedArg;
 }
 
-auto Parser::ParseOctal(string argument) -> string
+auto Parser::ParseOctal(const string& argument) -> string
 {
-    string arg = move(argument);
+    string arg = argument;
     string parsedArg;
     int decimal = 0;
 

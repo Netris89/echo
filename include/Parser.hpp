@@ -5,35 +5,29 @@
 class Parser
 {
 private:
+    int next;
+
     /**
-     * @brief Parses a string representing an octal number and returns the corresponding ASCII character.
+     * @brief Converts an octal escape sequence from the input string into its corresponding ASCII character.
      *
-     * This method takes a string that starts with a prefix (e.g., "0o" or similar), removes the prefix,
-     * converts the remaining part from octal to decimal, and returns the corresponding ASCII character as a string.
+     * This method expects an input string starting with an octal escape sequence (e.g., `\012`).
+     * It removes the first two characters (assumed to be the prefix \0`), then parses the remaining
+     * digits as an octal number and converts it to the corresponding ASCII character.
      *
-     * @param argument A string containing an octal number prefixed (e.g., "0o101").
-     * @return A string containing the ASCII character corresponding to the octal value.
-     *
-     * @note The input string must be properly formatted; otherwise, this method may throw an exception.
+     * @param argument A string starting with a prefix followed by octal digits (e.g., "0o101" or "\\012").
+     * @return A string containing the single character represented by the octal value.
      */
-    auto static ParseOctal(std::string) -> std::string;
-
-public:
-    Parser();
+    auto static ParseOctal(const std::string&) -> std::string;
 
     /**
-     * @brief Parses a command-line argument string and interprets escape sequences.
+     * @brief Parses a single escape sequence in the input string and returns its corresponding character.
      *
-     * This function processes a string argument and converts any valid escape sequences
-     * (e.g., `\\n`, `\\t`, `\\0xx`) into their corresponding character representations.
-     * It supports both standard escape sequences (like newline, tab, etc.) and octal escape
-     * sequences starting with `\\0` followed by up to three octal digits.
+     * This method examines the character at the next index (`next`) of the input string
+     * and attempts to interpret it as a valid escape sequence. If the character is recognized
+     * as a standard C++ escape code (e.g., `\n`, `\t`, `\0`), it is translated into the corresponding
+     * character. Octal sequences starting with `\0` are delegated to the `ParseOctal` method.
      *
-     * @param argument The input argument string potentially containing escape sequences.
-     * @return std::string The parsed string with escape sequences interpreted.
-     *
-     * @details
-     * Supported escape sequences include:
+     * Supported escape sequences:
      * - `\a` : Alert (bell)
      * - `\b` : Backspace
      * - `\f` : Form feed
@@ -41,20 +35,36 @@ public:
      * - `\r` : Carriage return
      * - `\t` : Horizontal tab
      * - `\v` : Vertical tab
-     * - `\\` : Literal backslash
-     * - `\0nnn` : Octal escape sequence (e.g., `\\012` = newline)
+     * - `\\` : Backslash
+     * - `\0nnn` : Octal escape (handled via `ParseOctal`)
      *
-     * The function loops through the input string and detects backslashes (`\\`),
-     * then determines the corresponding escape sequence. For octal escapes, it reads
-     * up to three octal digits and converts the result to a character.
+     * If the character following the backslash is not recognized, the method returns an empty string.
      *
-     * Invalid or incomplete escape sequences are ignored or passed through as-is.
+     * @param argument The input string that may contain an escape sequence at the `next` index.
+     * @return A string containing the corresponding interpreted character, or an empty string if unrecognized.
      *
-     * @note
-     * This implementation assumes the argument string is already formatted such that
-     * double backslashes (`\\`) represent a literal backslash in the input.
-     *
-     * @see https://en.cppreference.com/w/cpp/language/escape for a list of standard escape sequences.
+     * @see Parser::ParseOctal
      */
-    auto static ParseArgument(std::string) -> std::string;
+    [[nodiscard]]
+    auto ParseEscapeCharacter(const std::string&) const -> std::string;
+
+public:
+    Parser();
+
+    /**
+     * @brief Parses an input string containing escape sequences and returns the interpreted result.
+     *
+     * This method processes the input string character by character. When a backslash (`\\`) is encountered,
+     * it attempts to parse the following characters as an escape sequence using `ParseEscapeCharacter()`.
+     * Otherwise, the character is appended directly to the output string.
+     *
+     * The method supports both standard escape sequences (e.g., newline, tab) and octal escape sequences
+     * starting with `\0`.
+     *
+     * @param argument The input string that may include escape sequences.
+     * @return A string where all valid escape sequences are interpreted and replaced by their actual characters.
+     *
+     * @see Parser::ParseEscapeCharacter
+     */
+    auto ParseArgument(const std::string&) -> std::string;
 };
