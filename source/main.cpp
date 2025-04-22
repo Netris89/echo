@@ -32,7 +32,7 @@
 
 #include <unistd.h>
 
-#include "../include/Parser.hpp"
+#include "Parser.hpp"
 
 using std::cerr;
 using std::cout;

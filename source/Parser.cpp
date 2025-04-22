@@ -1,7 +1,7 @@
 #include <cstddef>
 #include <string>
 
-#include "../include/Parser.hpp"
+#include "Parser.hpp"
 
 #define OCTAL 8
 
