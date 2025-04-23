@@ -32,6 +32,8 @@ class Parser
 {
 private:
     int next;
+    static constexpr int OCTAL   = 8;
+    static constexpr int MAXSIZE = 5;
 
     /**
      * @brief Converts an octal escape sequence from the input string into its corresponding ASCII character.

@@ -4,8 +4,6 @@
 
 #include "Parser.hpp"
 
-#define OCTAL 8
-
 using std::stoi;
 using std::string;
 
@@ -101,13 +99,13 @@ auto Parser::ParseOctal(const string& argument) -> string
         }
     }
 
-    if (arg.at(0) == '\\' && arg.at(1) == '0' && arg.size() <= 4)
+    if (arg.at(0) == '\\' && arg.at(1) == '0' && arg.size() <= MAXSIZE)
     {
         arg.erase(0, 2);
         decimal     = stoi(arg, nullptr, OCTAL);
         parsedOctal = static_cast<char>(decimal);
     }
-    else if (arg.at(0) == '\\' && arg.at(1) == '0' && arg.size() > 4)
+    else if (arg.at(0) == '\\' && arg.at(1) == '0' && arg.size() > MAXSIZE)
     {
         return "\\0";
     }
