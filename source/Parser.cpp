@@ -12,41 +12,41 @@ Parser::Parser() : next(0) {};
 
 auto Parser::ParseEscapeCharacter(const string& argument) const -> string
 {
-    string parsedArg;
+    string parsedEscape;
 
     switch (argument.at(next))
     {
     case 'a':
-        parsedArg += '\a';
+        parsedEscape += '\a';
         break;
     case 'b':
-        parsedArg += '\b';
+        parsedEscape += '\b';
         break;
     case 'f':
-        parsedArg += '\f';
+        parsedEscape += '\f';
         break;
     case 'n':
-        parsedArg += '\n';
+        parsedEscape += '\n';
         break;
     case 'r':
-        parsedArg += '\r';
+        parsedEscape += '\r';
         break;
     case 't':
-        parsedArg += '\t';
+        parsedEscape += '\t';
         break;
     case 'v':
-        parsedArg += '\v';
+        parsedEscape += '\v';
         break;
     case '\\':
-        parsedArg += '\\';
+        parsedEscape += '\\';
         break;
     case '0':
-        parsedArg += ParseOctal(argument);
+        parsedEscape += ParseOctal(argument);
     default:
         break;
     }
 
-    return parsedArg;
+    return parsedEscape;
 }
 
 auto Parser::ParseArgument(const string& argument) -> string
@@ -57,14 +57,18 @@ auto Parser::ParseArgument(const string& argument) -> string
     for (char character : argument)
     {
         next++;
+        int previous = next - 2;
 
         if (character == '\\')
         {
-            parsedArg = ParseEscapeCharacter(argument);
+            parsedArg += ParseEscapeCharacter(argument);
         }
         else if (argument.front() != '\\')
         {
-            parsedArg += character;
+            if (previous < 0 || argument.at(previous) != '\\')
+            {
+                parsedArg += character;
+            }
         }
     }
 
@@ -74,13 +78,13 @@ auto Parser::ParseArgument(const string& argument) -> string
 auto Parser::ParseOctal(const string& argument) -> string
 {
     string arg = argument;
-    string parsedArg;
+    string parsedOctal;
     int decimal = 0;
 
     arg.erase(0, 2);
 
-    decimal   = stoi(arg, nullptr, OCTAL);
-    parsedArg = static_cast<char>(decimal);
+    decimal     = stoi(arg, nullptr, OCTAL);
+    parsedOctal = static_cast<char>(decimal);
 
-    return parsedArg;
+    return parsedOctal;
 }
