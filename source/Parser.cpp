@@ -1,3 +1,4 @@
+#include <cctype>
 #include <cstddef>
 #include <string>
 
@@ -42,6 +43,7 @@ auto Parser::ParseEscapeCharacter(const string& argument) const -> string
         break;
     case '0':
         parsedEscape += ParseOctal(argument);
+        break;
     default:
         break;
     }
@@ -77,14 +79,38 @@ auto Parser::ParseArgument(const string& argument) -> string
 
 auto Parser::ParseOctal(const string& argument) -> string
 {
-    string arg = argument;
+    int backslashIndex = 0;
+    string arg;
     string parsedOctal;
     int decimal = 0;
 
-    arg.erase(0, 2);
+    for (int i = 0; i < argument.size(); i++)
+    {
+        if (argument.at(i) == '\\' && argument.at(i + 1) == '0')
+        {
+            backslashIndex = i;
+            break;
+        }
+    }
 
-    decimal     = stoi(arg, nullptr, OCTAL);
-    parsedOctal = static_cast<char>(decimal);
+    for (int i = backslashIndex; i < argument.size(); i++)
+    {
+        if (argument.at(i) == '\\' || argument.at(i) == '0' || ::isdigit(argument.at(i)) != 0)
+        {
+            arg += argument.at(i);
+        }
+    }
+
+    if (arg.at(0) == '\\' && arg.at(1) == '0' && arg.size() <= 4)
+    {
+        arg.erase(0, 2);
+        decimal     = stoi(arg, nullptr, OCTAL);
+        parsedOctal = static_cast<char>(decimal);
+    }
+    else if (arg.at(0) == '\\' && arg.at(1) == '0' && arg.size() > 4)
+    {
+        return "\\0";
+    }
 
     return parsedOctal;
 }
