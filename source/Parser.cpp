@@ -43,6 +43,7 @@ auto Parser::ParseEscapeCharacter(const string& argument) const -> string
         parsedEscape += ParseOctal(argument);
         break;
     default:
+        // TODO(Ludo): implement case when it's not a valid escape sequence
         break;
     }
 
@@ -69,6 +70,7 @@ auto Parser::ParseArgument(const string& argument) -> string
             {
                 parsedArg += character;
             }
+            // FIXME : still prints last digits of an octal escape sequence
         }
     }
 
