@@ -55,7 +55,7 @@ auto Parser::ParseArgument(const string& argument) -> string
     string parsedArg;
     next = 0;
 
-    for (char character : argument)
+    /* for (char character : argument)
     {
         next++;
         int previous = next - 2;
@@ -71,6 +71,46 @@ auto Parser::ParseArgument(const string& argument) -> string
                 parsedArg += character;
             }
             // FIXME : still prints last digits of an octal escape sequence
+        }
+    } */
+    for (size_t i = 0; i < argument.size();)
+    {
+        next = i + 1;
+
+        if (argument.at(i) != '\\')
+        {
+            parsedArg += argument.at(i);
+            i++;
+            next++;
+        }
+
+        if (argument.at(i) == '\\')
+        {
+            parsedArg += ParseEscapeCharacter(argument);
+
+            if (argument.at(next) == '0')
+            {
+                i++;
+                
+                if (next + 1 <= argument.size() && (::isdigit(argument.at(next + 1)) != 0) && i <= argument.size())
+                {
+                    i++;
+                }
+
+                if (next + 2 <= argument.size() && (::isdigit(argument.at(next + 2)) != 0) && i <= argument.size())
+                {
+                    i++;
+                }
+
+                if (next + 3 <= argument.size() && (::isdigit(argument.at(next + 3)) != 0) && i <= argument.size())
+                {
+                    i++;
+                }
+            }
+            else
+            {
+                i += 2;
+            }
         }
     }
 
@@ -109,7 +149,7 @@ auto Parser::ParseOctal(const string& argument) -> string
     }
     else if (arg.at(0) == '\\' && arg.at(1) == '0' && arg.size() > MAXSIZE)
     {
-        return "\\0";
+        return arg;
     }
 
     return parsedOctal;

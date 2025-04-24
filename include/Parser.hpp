@@ -1,3 +1,4 @@
+#include <cstddef>
 #pragma Once;
 
 #include <string>
@@ -31,7 +32,7 @@
 class Parser
 {
 private:
-    int next;
+    size_t next;
     static constexpr int OCTAL   = 8;
     static constexpr int MAXSIZE = 5;
 
