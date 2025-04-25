@@ -43,7 +43,8 @@ auto Parser::ParseEscapeCharacter(const string& argument, size_t counter) -> str
         parsedEscape += ParseOctal(argument);
         break;
     default:
-        // TODO(Ludo): implement case when it's not a valid escape sequence
+        parsedEscape += argument.at(counter);
+        parsedEscape += argument.at(counter + 1);
         break;
     }
 
