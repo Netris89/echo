@@ -75,7 +75,7 @@ auto Parser::ParseArgument(const string& argument) -> string
                     {
                         break;
                     }
-                    
+
                     i++;
                     counter++;
                 }
@@ -107,15 +107,18 @@ auto Parser::ParseOctal(const string& argument, size_t counter) -> string
         }
     }
 
-    // TODO(Ludo): octal sequence can't have numbers higher than 7
+    if ((arg.at(2) - '0') > OCTAL || 3 < arg.size() && (arg.at(3) - '0') > OCTAL || 4 < arg.size() && (arg.at(4) - '0') > OCTAL)
+    {
+        return arg;
+    }
 
-    if (arg.at(0) == '\\' && arg.at(1) == '0' && arg.size() <= MAXSIZE)
+    if (arg.size() <= MAXSIZE)
     {
         arg.erase(0, 2);
         decimal     = stoi(arg, nullptr, OCTAL);
         parsedOctal = static_cast<char>(decimal);
     }
-    else if (arg.at(0) == '\\' && arg.at(1) == '0' && arg.size() > MAXSIZE)
+    else if (arg.size() > MAXSIZE)
     {
         return arg;
     }
