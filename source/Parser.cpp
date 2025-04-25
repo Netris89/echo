@@ -104,6 +104,8 @@ auto Parser::ParseOctal(const string& argument, size_t counter) -> string
         }
     }
 
+    // TODO(Ludo): octal sequence can't have numbers higher than 7
+
     if (arg.at(0) == '\\' && arg.at(1) == '0' && arg.size() <= MAXSIZE)
     {
         arg.erase(0, 2);
