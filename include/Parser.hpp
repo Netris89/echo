@@ -45,7 +45,7 @@ private:
      * @param argument A string starting with a prefix followed by octal digits (e.g., "\012").
      * @return A string containing the single character represented by the octal value.
      */
-    auto static ParseOctal(const std::string&) -> std::string;
+    auto static ParseOctal(const std::string&, size_t) -> std::string;
 
     /**
      * @brief Parses a single escape sequence in the input string and returns its corresponding character.

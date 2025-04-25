@@ -40,7 +40,7 @@ auto Parser::ParseEscapeCharacter(const string& argument, size_t counter) -> str
         parsedEscape += '\\';
         break;
     case '0':
-        parsedEscape += ParseOctal(argument);
+        parsedEscape += ParseOctal(argument, counter);
         break;
     default:
         parsedEscape += argument.at(counter);
@@ -89,23 +89,14 @@ auto Parser::ParseArgument(const string& argument) -> string
     return parsedArg;
 }
 
-auto Parser::ParseOctal(const string& argument) -> string
+auto Parser::ParseOctal(const string& argument, size_t counter) -> string
 {
     int decimal        = 0;
     int backslashIndex = 0;
     string arg;
     string parsedOctal;
 
-    for (int i = 0; i < argument.size(); i++)
-    {
-        if (argument.at(i) == '\\' && argument.at(i + 1) == '0')
-        {
-            backslashIndex = i;
-            break;
-        }
-    }
-
-    for (int i = backslashIndex; i < argument.size(); i++)
+    for (size_t i = counter; i < argument.size(); i++)
     {
         if (argument.at(i) == '\\' || argument.at(i) == '0' || ::isdigit(argument.at(i)) != 0)
         {
