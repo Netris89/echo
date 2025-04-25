@@ -7,13 +7,13 @@
 using std::stoi;
 using std::string;
 
-Parser::Parser() : next(0) {};
+Parser::Parser() = default;
 
-auto Parser::ParseEscapeCharacter(const string& argument) const -> string
+auto Parser::ParseEscapeCharacter(const string& argument, size_t counter) -> string
 {
     string parsedEscape;
 
-    switch (argument.at(next))
+    switch (argument.at(counter + 1))
     {
     case 'a':
         parsedEscape += '\a';
@@ -53,63 +53,34 @@ auto Parser::ParseEscapeCharacter(const string& argument) const -> string
 auto Parser::ParseArgument(const string& argument) -> string
 {
     string parsedArg;
-    next = 0;
 
-    /* for (char character : argument)
+    for (size_t i = 0; i < argument.size(); i++)
     {
-        next++;
-        int previous = next - 2;
-
-        if (character == '\\')
-        {
-            parsedArg += ParseEscapeCharacter(argument);
-        }
-        else if (argument.front() != '\\')
-        {
-            if (previous < 0 || argument.at(previous) != '\\')
-            {
-                parsedArg += character;
-            }
-            // FIXME : still prints last digits of an octal escape sequence
-        }
-    } */
-    for (size_t i = 0; i < argument.size();)
-    {
-        next = i + 1;
-
         if (argument.at(i) != '\\')
         {
             parsedArg += argument.at(i);
-            i++;
-            next++;
         }
-
-        if (argument.at(i) == '\\')
+        else
         {
-            parsedArg += ParseEscapeCharacter(argument);
+            parsedArg += ParseEscapeCharacter(argument, i);
 
-            if (argument.at(next) == '0')
+            if (argument.at(i + 1) == '0')
             {
+                for (size_t j = i + 2; j < argument.size() && ::isdigit(argument.at(j)) != 0; j++)
+                {
+                    if (::isdigit(argument.at(j)) == 0)
+                    {
+                        break;
+                    }
+
+                    i++;
+                }
+
                 i++;
-                
-                if (next + 1 <= argument.size() && (::isdigit(argument.at(next + 1)) != 0) && i <= argument.size())
-                {
-                    i++;
-                }
-
-                if (next + 2 <= argument.size() && (::isdigit(argument.at(next + 2)) != 0) && i <= argument.size())
-                {
-                    i++;
-                }
-
-                if (next + 3 <= argument.size() && (::isdigit(argument.at(next + 3)) != 0) && i <= argument.size())
-                {
-                    i++;
-                }
             }
             else
             {
-                i += 2;
+                i++;
             }
         }
     }
@@ -119,10 +90,10 @@ auto Parser::ParseArgument(const string& argument) -> string
 
 auto Parser::ParseOctal(const string& argument) -> string
 {
+    int decimal        = 0;
     int backslashIndex = 0;
     string arg;
     string parsedOctal;
-    int decimal = 0;
 
     for (int i = 0; i < argument.size(); i++)
     {

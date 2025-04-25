@@ -20,7 +20,7 @@
  * @code
  * Parser parser;
  * std::string parsed = parser.ParseArgument("Hello\\nWorld\\041");
- * // parsed == "Hello\nWorld!"
+ * parsed == "Hello\nWorld!"
  * @endcode
  *
  * @note Octal escapes must begin with `\0` and contain up to three octal digits (0–7).
@@ -32,7 +32,6 @@
 class Parser
 {
 private:
-    size_t next;
     static constexpr int OCTAL   = 8;
     static constexpr int MAXSIZE = 5;
 
@@ -51,7 +50,7 @@ private:
     /**
      * @brief Parses a single escape sequence in the input string and returns its corresponding character.
      *
-     * This method examines the character at the next index (`next`) of the input string
+     * This method examines the character at the next index of the input string
      * and attempts to interpret it as a valid escape sequence. If the character is recognized
      * as a standard C++ escape code (e.g., `\n`, `\t`, `\0`), it is translated into the corresponding
      * character. Octal sequences starting with `\0` are delegated to the `ParseOctal` method.
@@ -75,7 +74,7 @@ private:
      * @see Parser::ParseOctal
      */
     [[nodiscard]]
-    auto ParseEscapeCharacter(const std::string&) const -> std::string;
+    auto static ParseEscapeCharacter(const std::string&, size_t) -> std::string;
 
 public:
     Parser();
@@ -95,5 +94,5 @@ public:
      *
      * @see Parser::ParseEscapeCharacter
      */
-    auto ParseArgument(const std::string&) -> std::string;
+    auto static ParseArgument(const std::string&) -> std::string;
 };
