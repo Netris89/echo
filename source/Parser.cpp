@@ -67,14 +67,17 @@ auto Parser::ParseArgument(const string& argument) -> string
 
             if (argument.at(i + 1) == '0')
             {
-                for (size_t j = i + 2; j < argument.size() && ::isdigit(argument.at(j)) != 0; j++)
+                size_t counter = i + 2;
+
+                while (counter < argument.size() && ::isdigit(argument.at(counter)) != 0)
                 {
-                    if (::isdigit(argument.at(j)) == 0)
+                    if (::isdigit(argument.at(counter)) == 0)
                     {
                         break;
                     }
-
+                    
                     i++;
+                    counter++;
                 }
 
                 i++;
