@@ -1,6 +1,6 @@
-#include <cstddef>
-#pragma Once;
+#pragma Once
 
+#include <cstddef>
 #include <string>
 
 /**
@@ -73,8 +73,7 @@ private:
      *
      * @see Parser::ParseOctal
      */
-    [[nodiscard]]
-    auto static ParseEscapeCharacter(const std::string&, size_t) -> std::string;
+    [[nodiscard]] auto static ParseEscapeCharacter(const std::string&, size_t) -> std::string;
 
 public:
     Parser();
