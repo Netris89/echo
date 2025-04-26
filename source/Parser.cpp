@@ -9,6 +9,40 @@ using std::string;
 
 Parser::Parser() = default;
 
+auto Parser::ParseOctal(const string& argument, size_t counter) -> string
+{
+    int decimal        = 0;
+    int backslashIndex = 0;
+    string arg;
+    string parsedOctal;
+
+    for (size_t i = counter; i < argument.size(); i++)
+    {
+        if (argument.at(i) == '\\' || argument.at(i) == '0' || ::isdigit(argument.at(i)) != 0)
+        {
+            arg += argument.at(i);
+        }
+    }
+
+    if ((arg.at(2) - '0') > OCTAL || 3 < arg.size() && (arg.at(3) - '0') > OCTAL || 4 < arg.size() && (arg.at(4) - '0') > OCTAL)
+    {
+        return arg;
+    }
+
+    if (arg.size() <= MAXSIZE)
+    {
+        arg.erase(0, 2);
+        decimal     = stoi(arg, nullptr, OCTAL);
+        parsedOctal = static_cast<char>(decimal);
+    }
+    else if (arg.size() > MAXSIZE)
+    {
+        return arg;
+    }
+
+    return parsedOctal;
+}
+
 auto Parser::ParseEscapeCharacter(const string& argument, size_t counter) -> string
 {
     string parsedEscape;
@@ -96,38 +130,4 @@ auto Parser::ParseArgument(const string& argument) -> string
     }
 
     return parsedArg;
-}
-
-auto Parser::ParseOctal(const string& argument, size_t counter) -> string
-{
-    int decimal        = 0;
-    int backslashIndex = 0;
-    string arg;
-    string parsedOctal;
-
-    for (size_t i = counter; i < argument.size(); i++)
-    {
-        if (argument.at(i) == '\\' || argument.at(i) == '0' || ::isdigit(argument.at(i)) != 0)
-        {
-            arg += argument.at(i);
-        }
-    }
-
-    if ((arg.at(2) - '0') > OCTAL || 3 < arg.size() && (arg.at(3) - '0') > OCTAL || 4 < arg.size() && (arg.at(4) - '0') > OCTAL)
-    {
-        return arg;
-    }
-
-    if (arg.size() <= MAXSIZE)
-    {
-        arg.erase(0, 2);
-        decimal     = stoi(arg, nullptr, OCTAL);
-        parsedOctal = static_cast<char>(decimal);
-    }
-    else if (arg.size() > MAXSIZE)
-    {
-        return arg;
-    }
-
-    return parsedOctal;
 }
