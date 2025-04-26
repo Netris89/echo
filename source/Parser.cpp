@@ -9,45 +9,48 @@ using std::string;
 
 Parser::Parser() = default;
 
-auto Parser::ParseOctal(const string& argument, size_t counter) -> string
+auto Parser::ParseOctal(const string& argument, size_t position) -> string
 {
-    int decimal        = 0;
-    int backslashIndex = 0;
-    string arg;
-    string parsedOctal;
+    int decimal        = 0; // Decimal value converted from octal
+    int backslashIndex = 0; // Position of the \\ in the escape sequence
+    string octalSeq;        // Extracted octal escape sequence
+    string asciiChar;       // Resulting ASCII character from octal conversion
 
-    for (size_t i = counter; i < argument.size(); i++)
+    // Loops through the whole argument to find where the octal escape sequence is and put it whole in a variable
+    for (size_t i = position; i < argument.size(); i++)
     {
         if (argument.at(i) == '\\' || argument.at(i) == '0' || ::isdigit(argument.at(i)) != 0)
         {
-            arg += argument.at(i);
+            octalSeq += argument.at(i);
         }
     }
 
-    if ((arg.at(2) - '0') > OCTAL || 3 < arg.size() && (arg.at(3) - '0') > OCTAL || 4 < arg.size() && (arg.at(4) - '0') > OCTAL)
+    // Checks if the escape sequence actually is octal. If not, returns it as is
+    if ((octalSeq.at(2) - '0') > OCTAL || 3 < octalSeq.size() && (octalSeq.at(3) - '0') > OCTAL || 4 < octalSeq.size() && (octalSeq.at(4) - '0') > OCTAL)
     {
-        return arg;
+        return octalSeq;
     }
 
-    if (arg.size() <= MAXSIZE)
+    // If the octal sequence length is at most 3 digits, convert it to ASCII; otherwise, return the sequence unchanged
+    if (octalSeq.size() <= MAXSIZE)
     {
-        arg.erase(0, 2);
-        decimal     = stoi(arg, nullptr, OCTAL);
-        parsedOctal = static_cast<char>(decimal);
+        octalSeq.erase(0, 2);
+        decimal   = stoi(octalSeq, nullptr, OCTAL);
+        asciiChar = static_cast<char>(decimal);
     }
-    else if (arg.size() > MAXSIZE)
+    else if (octalSeq.size() > MAXSIZE)
     {
-        return arg;
+        return octalSeq;
     }
 
-    return parsedOctal;
+    return asciiChar;
 }
 
-auto Parser::ParseEscapeCharacter(const string& argument, size_t counter) -> string
+auto Parser::ParseEscapeCharacter(const string& argument, size_t position) -> string
 {
-    string parsedEscape;
+    string parsedEscape; // Result escape sequence after being parse
 
-    switch (argument.at(counter + 1))
+    switch (argument.at(position + 1))
     {
     case 'a':
         parsedEscape += '\a';
@@ -74,11 +77,11 @@ auto Parser::ParseEscapeCharacter(const string& argument, size_t counter) -> str
         parsedEscape += '\\';
         break;
     case '0':
-        parsedEscape += ParseOctal(argument, counter);
+        parsedEscape += ParseOctal(argument, position);
         break;
     default:
-        parsedEscape += argument.at(counter);
-        parsedEscape += argument.at(counter + 1);
+        parsedEscape += argument.at(position);
+        parsedEscape += argument.at(position + 1);
         break;
     }
 
@@ -87,33 +90,36 @@ auto Parser::ParseEscapeCharacter(const string& argument, size_t counter) -> str
 
 auto Parser::ParseArgument(const string& argument) -> string
 {
-    string parsedArg;
+    string parsedArg; // Parsed argument being constructed
 
     for (size_t i = 0; i < argument.size(); i++)
     {
+        // If the current character is not \\, just adds it to the output string being constructed
         if (argument.at(i) != '\\')
         {
             parsedArg += argument.at(i);
             continue;
         }
 
+        // If the current character is not \\ and is not the last character, parse it
         if (argument.at(i) != '\\' && argument.back() != '\\')
         {
             parsedArg += ParseEscapeCharacter(argument, i);
 
+            // If the next character is 0, it is an octal sequence and we need to advance the position counter of the size of the sequence
             if (argument.at(i + 1) == '0')
             {
-                size_t counter = i + 2;
+                size_t position = i + 2;
 
-                while (counter < argument.size() && ::isdigit(argument.at(counter)) != 0)
+                while (position < argument.size() && ::isdigit(argument.at(position)) != 0)
                 {
-                    if (::isdigit(argument.at(counter)) == 0)
+                    if (::isdigit(argument.at(position)) == 0)
                     {
                         break;
                     }
 
                     i++;
-                    counter++;
+                    position++;
                 }
 
                 i++;

@@ -41,7 +41,7 @@ using std::vector;
 
 auto main(int argc, char* argv[]) -> int
 {
-    vector<string> arguments(argv + 1, argv + argc); // Create a vector of arguments from command-line inputs
+    vector<string> arguments(argv + 1, argv + argc); // Vector of arguments from command-line inputs
     
     // Check if no arguments are provided (argc <= 1 means no input string)
     if (argc <= 1)
