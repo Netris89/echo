@@ -60,8 +60,10 @@ auto Parser::ParseArgument(const string& argument) -> string
         if (argument.at(i) != '\\')
         {
             parsedArg += argument.at(i);
+            continue;
         }
-        else
+
+        if (argument.at(i) != '\\' && argument.back() != '\\')
         {
             parsedArg += ParseEscapeCharacter(argument, i);
 
@@ -86,6 +88,10 @@ auto Parser::ParseArgument(const string& argument) -> string
             {
                 i++;
             }
+        }
+        else
+        {
+            parsedArg += "\\";
         }
     }
 
