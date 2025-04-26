@@ -21,7 +21,7 @@
  *    \0num   : 8-bit octal value (num)
  *
  *  Note: More details on options and behavior can be found here:
- *  https://pubs.opengroup.org/onlinepubs/9699919799/utilities/echo.html
+ *  https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html
  */
 
 #include <cstdlib>

@@ -23,7 +23,7 @@ Simple implementation of a POSIX echo command-line utility in C++, which interpr
 
 - A modern C++ compiler (C++17 or later).
 
-## Installation
+## Build
 
 Clone the repository and compile the project with:
 
