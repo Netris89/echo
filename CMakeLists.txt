@@ -17,9 +17,6 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 # Create the executable target for your main program
 add_executable(echo ${SOURCES})
 
-# Set the output directory for the built executable to the 'build' directory
-set_target_properties(echo PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
-
 # Enable testing in the project (required for CTest and GoogleTest integration)
 # enable_testing()
 # include(GoogleTest)
