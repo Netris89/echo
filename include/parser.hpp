@@ -24,7 +24,7 @@
  *  https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html
  */
 
- #pragma Once
+#pragma Once
 
 #include <cstddef>
 #include <string>

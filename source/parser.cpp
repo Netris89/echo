@@ -24,7 +24,7 @@
  *  https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html
  */
 
- #include <cctype>
+#include <cctype>
 #include <cstddef>
 #include <string>
 
@@ -45,7 +45,7 @@ auto Parser::ParseOctal(const string& argument, size_t position) -> string
     // Loops through the whole argument to find where the octal escape sequence is and put it whole in a variable
     for (size_t i = position; i < argument.size(); i++)
     {
-        if (argument.at(i) == '\\' || argument.at(i) == '0' || ::isdigit(argument.at(i)) != 0)
+        if (argument.at(i) == '\\' || argument.at(i) == '0' || isdigit(argument.at(i)) != 0)
         {
             octalSeq += argument.at(i);
         }
