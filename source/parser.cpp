@@ -28,7 +28,7 @@
 #include <cstddef>
 #include <string>
 
-#include "Parser.hpp"
+#include "parser.hpp"
 
 using std::stoi;
 using std::string;
