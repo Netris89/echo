@@ -7,6 +7,9 @@ cmake_minimum_required(VERSION 3.28)
 # Define the project name
 project(echo)
 
+# Include CTest module to enable testing functionality
+include(CTest)
+
 # Set the C++ standard to C++20 and enforce it
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -29,14 +32,14 @@ find_package(GTest REQUIRED)
 # Create the test executable for parser tests
 add_executable(testParser "${PROJECT_SOURCE_DIR}/test/testParser.cpp")
 
-# Create a library target to reuse in the test target
-add_library(parser_lib ${SOURCES})
+# Add parser.cpp directly to the test executable
+target_sources(testParser PRIVATE ${PROJECT_SOURCE_DIR}/source/parser.cpp)
 
 # Set the output directory for the test executable
 set_target_properties(testParser PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
 
-# Link the test executable with the parser library and GoogleTest libraries
-target_link_libraries(testParser PRIVATE parser_lib GTest::GTest GTest::Main)
+# Link the test executable with GoogleTest libraries
+target_link_libraries(testParser PRIVATE GTest::GTest GTest::Main)
 
 # Automatically discover tests from the test executable (requires gtest_main)
 gtest_discover_tests(testParser)
