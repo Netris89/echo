@@ -10,32 +10,32 @@ TEST(ParserTests, TestSimpleArguments)
 
 TEST(ParserTests, TestNewLine)
 {
-    EXPECT_EQ(Parser::ParseArgument("Hello\\nWorld"), "Hello\nWorld");
+    EXPECT_EQ(Parser::ParseArgument("Hello\nWorld"), "Hello\nWorld");
 }
 
 TEST(ParserTests, TestTab)
 {
-    EXPECT_EQ(Parser::ParseArgument("Tab\\tSpace"), "Tab\tSpace");
+    EXPECT_EQ(Parser::ParseArgument("Tab\tSpace"), "Tab\tSpace");
 }
 
 TEST(ParserTests, TestBackspace)
 {
-    EXPECT_EQ(Parser::ParseArgument("Back\\bSpace"), "Back\bSpace");
+    EXPECT_EQ(Parser::ParseArgument("Back\bSpace"), "Back\bSpace");
 }
 
 TEST(ParserTests, TestAlert)
 {
-    EXPECT_EQ(Parser::ParseArgument("Alert\\aSound"), "Alert\aSound");
+    EXPECT_EQ(Parser::ParseArgument("Alert\aSound"), "Alert\aSound");
 }
 
 TEST(ParserTests, TestLineBreak)
 {
-    EXPECT_EQ(Parser::ParseArgument("Line\\012Break"), "Line\nBreak");
+    EXPECT_EQ(Parser::ParseArgument("Line\012Break"), "Line\nBreak");
 }
 
 TEST(ParserTests, TestBackslash)
 {
-    EXPECT_EQ(Parser::ParseArgument("Backslash\\\\"), "Backslash\\");
+    EXPECT_EQ(Parser::ParseArgument("Backslash\\"), "Backslash\\");
 }
 
 TEST(ParserTests, TestInvalidEscapeSequences)
