@@ -35,11 +35,22 @@ TEST(ParserTests, TestLineBreak)
 
 TEST(ParserTests, TestBackslash)
 {
-    EXPECT_EQ(Parser::ParseArgument("Backslash\\"), "Backslash\\");
+    EXPECT_EQ(Parser::ParseArgument("Backslash\\\\"), "Backslash\\\\");
 }
 
 TEST(ParserTests, TestInvalidEscapeSequences)
 {
     EXPECT_EQ(Parser::ParseArgument("Invalid\\xEscape"), "Invalid\\xEscape");
     EXPECT_EQ(Parser::ParseArgument("EndWith\\"), "EndWith\\");
+    EXPECT_EQ(Parser::ParseArgument("\\StartWith"), "\\StartWith");
+}
+
+TEST(ParserTests, TestEmptyString)
+{
+    EXPECT_EQ(Parser::ParseArgument(""), "");
+}
+
+TEST(ParserTests, TestOctal)
+{
+    EXPECT_EQ(Parser::ParseArgument("\041"), "!");
 }
