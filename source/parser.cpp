@@ -137,9 +137,9 @@ auto Parser::ParseArgument(const string& argument) -> string
             {
                 size_t position = i + 2;
 
-                while (position < argument.size() && ::isdigit(argument.at(position)) != 0)
+                while (position < argument.size() && isdigit(argument.at(position)) != 0)
                 {
-                    if (::isdigit(argument.at(position)) == 0)
+                    if (isdigit(argument.at(position)) == 0)
                     {
                         break;
                     }
