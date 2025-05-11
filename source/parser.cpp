@@ -127,8 +127,14 @@ auto Parser::ParseArgument(const string& argument) -> string
             continue;
         }
 
+        if (argument.back() == '\\')
+        {
+            parsedArg += '\\';
+            continue;
+        }
+
         // If the current character is not \\ and is not the last character, parse it
-        if (argument.at(i) != '\\' && argument.back() != '\\')
+        if (argument.at(i + 1) != '\\' && argument.back() != '\\')
         {
             parsedArg += ParseEscapeCharacter(argument, i);
 
