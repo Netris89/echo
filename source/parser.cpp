@@ -11,14 +11,16 @@
  *  Usage: ./echo <string>
  *
  *  The following escape sequences are supported:
- *    \a      : Alert
- *    \b      : Backspace
- *    \n      : Newline
- *    \t      : Tab
- *    \r      : Carriage return
- *    \v      : Vertical tab
- *    \\      : Backslash
- *    \0num   : 8-bit octal value (num)
+ *      \a      : Alert
+ *      \b      : Backspace
+ *      \c      : Suppress the <newline> that otherwise follows the final argument in the output. All characters following the '\c' in the arguments shall be ignored.
+ *      \f      : Form-feed
+ *      \n      : Newline
+ *      \t      : Tab
+ *      \r      : Carriage return
+ *      \v      : Vertical tab
+ *      \\      : Backslash
+ *      \0num   : 8-bit octal value (num)
  *
  *  Note: More details on options and behavior can be found here:
  *  https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html
@@ -83,6 +85,8 @@ auto Parser::ParseEscapeCharacter(const string& argument, size_t position) -> st
         break;
     case 'b':
         parsedEscape += '\b';
+        break;
+    case 'c':
         break;
     case 'f':
         parsedEscape += '\f';
@@ -155,6 +159,10 @@ auto Parser::ParseArgument(const string& argument) -> string
                 }
 
                 i++;
+            }
+            else if (argument.at(i + 1) == 'c') // If the next character is C, it is an interrupt sequence so returns the parsed argument as it is
+            {
+                return parsedArg;
             }
             else
             {
