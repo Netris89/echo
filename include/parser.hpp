@@ -11,14 +11,16 @@
  *  Usage: ./echo <string>
  *
  *  The following escape sequences are supported:
- *    \a      : Alert
- *    \b      : Backspace
- *    \n      : Newline
- *    \t      : Tab
- *    \r      : Carriage return
- *    \v      : Vertical tab
- *    \\      : Backslash
- *    \0num   : 8-bit octal value (num)
+ *      \a      : Alert
+ *      \b      : Backspace
+ *      \c      : Suppress the <newline> that otherwise follows the final argument in the output. All characters following the '\c' in the arguments shall be ignored.
+ *      \f      : Form-feed
+ *      \n      : Newline
+ *      \t      : Tab
+ *      \r      : Carriage return
+ *      \v      : Vertical tab
+ *      \\      : Backslash
+ *      \0num   : 8-bit octal value (num)
  *
  *  Note: More details on options and behavior can be found here:
  *  https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html
