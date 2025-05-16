@@ -57,7 +57,7 @@ Run the compiled binary with arguments to print to stdout:
 | \\ | Backslash |
 | \0num | 8-bit octal value |
 
-> **Note**  
+> [!Note]
 > Octal escape sequences must begin with `\0` and contain up to three octal digits (e.g., `\041`).
 >  
 > For more details on the behavior of the `echo` command, refer to the  
