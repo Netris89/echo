@@ -41,7 +41,9 @@ auto Parser::ParseOctal(const string& argument, size_t position) -> string
 {
     int decimal        = 0; // Decimal value converted from octal
     int backslashIndex = 0; // Position of the \\ in the escape sequence
-    string octalSeq;        // Extracted octal escape sequence
+    string seqToParse;      // Extracted escape sequence to be parse
+    string octalSeq;        // Result of the parsing
+    string endSeq;          // Anything left after the sequence
     string asciiChar;       // Resulting ASCII character from octal conversion
 
     // Loops through the whole argument to find where the octal escape sequence is and put it whole in a variable
@@ -49,27 +51,26 @@ auto Parser::ParseOctal(const string& argument, size_t position) -> string
     {
         if (argument.at(i) == '\\' || argument.at(i) == '0' || isdigit(argument.at(i)) != 0)
         {
-            octalSeq += argument.at(i);
+            seqToParse += argument.at(i);
         }
     }
 
-    // Checks if the escape sequence actually is octal. If not, returns it as is
-    if ((octalSeq.at(2) - '0') > OCTAL || 3 < octalSeq.size() && (octalSeq.at(3) - '0') > OCTAL || 4 < octalSeq.size() && (octalSeq.at(4) - '0') > OCTAL)
+    // Loops through the whole parsed sequence to separate the octal sequence (max 3 numbers) & anything that could be something else after
+    for (char character : seqToParse)
     {
-        return octalSeq;
+        if (character == '\\' || character - '0' < OCTAL)
+        {
+            octalSeq += character;
+        }
+        else
+        {
+            endSeq += character;
+        }
     }
 
-    // If the octal sequence length is at most 3 digits, convert it to ASCII; otherwise, return the sequence unchanged
-    if (octalSeq.size() <= MAXSIZE)
-    {
-        octalSeq.erase(0, 2);
-        decimal   = stoi(octalSeq, nullptr, OCTAL);
-        asciiChar = static_cast<char>(decimal);
-    }
-    else if (octalSeq.size() > MAXSIZE)
-    {
-        return octalSeq;
-    }
+    octalSeq.erase(0, 2);                            // Removes '\\' & '0' from the sequence
+    decimal   = stoi(octalSeq, nullptr, OCTAL);      // transforms the octal number in decimal
+    asciiChar = static_cast<char>(decimal) + endSeq; // Converts the decimal number in ascii char then adds anything remaining at the end
 
     return asciiChar;
 }

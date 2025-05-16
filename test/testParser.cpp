@@ -63,6 +63,6 @@ TEST(ParserTests, TestOctal)
 {
     EXPECT_EQ(Parser::ParseArgument("\\041"), "!");
     EXPECT_EQ(Parser::ParseArgument("\\012"), "\n");
-    EXPECT_EQ(Parser::ParseArgument("\\078"), "\0078"); // FIXME : Find why those tests don't pass
+    EXPECT_EQ(Parser::ParseArgument("\\078"), "\078");
     EXPECT_EQ(Parser::ParseArgument("\\0x"), "\0x");    // FIXME : Find why those tests don't pass
 }
