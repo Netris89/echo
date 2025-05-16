@@ -42,6 +42,16 @@ TEST(ParserTests, TestTab)
     EXPECT_EQ(Parser::ParseArgument("Tab\tSpace"), "Tab\tSpace");
 }
 
+TEST(ParserTests, TestCarriageReturn)
+{
+    EXPECT_EQ(Parser::ParseArgument("Carriage\rReturn"), "Carriage\rReturn");
+}
+
+TEST(ParserTests, TestVerticalTab)
+{
+    EXPECT_EQ(Parser::ParseArgument("Vertical\vTab"), "Vertical\vTab");
+}
+
 TEST(ParserTests, TestBackslash)
 {
     EXPECT_EQ(Parser::ParseArgument("Back\\slash"), "Back\\slash");
@@ -65,4 +75,15 @@ TEST(ParserTests, TestOctal)
     EXPECT_EQ(Parser::ParseArgument("\\012"), "\n");
     EXPECT_EQ(Parser::ParseArgument("\\078"), "\078");
     EXPECT_EQ(Parser::ParseArgument("\\0x"), "\\0x");
+}
+
+TEST(ParserTests, TestNoOption)
+{
+    EXPECT_EQ(Parser::ParseArgument("-eEcho"), "-eEcho");
+    EXPECT_EQ(Parser::ParseArgument("-nNoNewline"), "-nNoNewline");
+}
+
+TEST(ParserTests, TestMultipleEscapeSequences)
+{
+    EXPECT_EQ(Parser::ParseArgument("Mix\\a\\b\\t\\nEnd"), string("Mix") + '\a' + '\b' + '\t' + '\n' + "End");
 }
