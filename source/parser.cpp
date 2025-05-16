@@ -47,7 +47,7 @@ auto Parser::ParseOctal(const string& argument, size_t position) -> string
     string asciiChar;       // Resulting ASCII character from octal conversion
 
     // Loops through the whole argument to find where the octal escape sequence is and put it whole in a variable
-    for (size_t i = position; i < argument.size(); i++)
+    for (size_t i = position; i < argument.size() && seqToParse.size() < 4; i++)
     {
         if (argument.at(i) == '\\' || argument.at(i) == '0' || isdigit(argument.at(i)) != 0)
         {
@@ -68,11 +68,19 @@ auto Parser::ParseOctal(const string& argument, size_t position) -> string
         }
     }
 
-    if (octalSeq.size() > 2)
+    if (octalSeq.size() > 1)
     {
-        octalSeq.erase(0, 2);                            // Removes '\\' & '0' from the sequence
-        decimal   = stoi(octalSeq, nullptr, OCTAL);      // transforms the octal number in decimal
-        asciiChar = static_cast<char>(decimal) + endSeq; // Converts the decimal number in ascii char then adds anything remaining at the end
+        octalSeq.erase(0, 2); // Removes '\\' & '0' from the sequence
+
+        if (octalSeq.size() != 0)
+        {
+            decimal   = stoi(octalSeq, nullptr, OCTAL);      // transforms the octal number in decimal
+            asciiChar = static_cast<char>(decimal) + endSeq; // Converts the decimal number in ascii char then adds anything remaining at the end
+        }
+        else if (endSeq.size() == 0)
+        {
+            asciiChar = "\\0";
+        }
     }
     else
     {
