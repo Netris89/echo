@@ -13,7 +13,7 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout Projet-integration
+      - name: Checkout Utilities
         uses: actions/checkout@v4.2.2
         with:
           repository: Netris89/Utilities
