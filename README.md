@@ -1,6 +1,5 @@
 # Echo
 
-
 Simple implementation of the echo command-line utility in C++ with support for various escape sequences such as \a, \b, \n, \t, \0num (octal), and more. This implementation aims to be POSIX-compliant.
 
 ## Features
