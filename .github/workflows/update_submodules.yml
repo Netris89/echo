@@ -13,10 +13,10 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout Utilities
+      - name: Checkout core-utils
         uses: actions/checkout@v4.2.2
         with:
-          repository: Netris89/Utilities
+          repository: Netris89/core-utils
           token: ${{ secrets.TOKEN }}
           submodules: true
           persist-credentials: false
