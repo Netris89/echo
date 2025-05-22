@@ -19,12 +19,10 @@ Simple implementation of the echo command-line utility in C++ with support for v
     - \\ : Backslash
     - \0num : 8-bit octal value
 
-## Prerequisites
-
-- A modern C++ compiler (C++20 or later).
-
 ## Build
-
+> [!IMPORTANT]
+> Requirements: CMake 3.10+, a C++20-compliant compiler (e.g., GCC 10+, Clang 9+).
+```sh
 Clone the repository and compile the project with:
 
 ```sh
