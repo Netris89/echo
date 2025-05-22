@@ -1,7 +1,5 @@
 # Echo
 
-> [!IMPORTANT]
-> This is a small project created for practicing and improving my C++ skills. It is not intended for production use, but rather as a personal learning tool.
 
 Simple implementation of the echo command-line utility in C++ with support for various escape sequences such as \a, \b, \n, \t, \0num (octal), and more. This implementation aims to be POSIX-compliant.
 
