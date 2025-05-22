@@ -101,7 +101,7 @@ private:
      *
      * @see Parser::ParseOctal
      */
-    [[nodiscard]] auto static ParseEscapeCharacter(const std::string&, size_t) -> std::string;
+    auto static ParseEscapeCharacter(const std::string&, size_t) -> std::string;
 
 public:
     Parser();
