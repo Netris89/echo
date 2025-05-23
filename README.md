@@ -13,13 +13,13 @@ Simple implementation of the echo command-line utility in C++ with support for v
     - \r : Carriage return
     - \t : Tab
     - \v : Vertical tab
-    - \\ : Backslash
+    - \\\\ : Backslash
     - \0num : 8-bit octal value
 
 ## Build
 > [!IMPORTANT]
 > Requirements: CMake 3.10+, a C++20-compliant compiler (e.g., GCC 10+, Clang 9+).
-```sh
+
 Clone the repository and compile the project with:
 
 ```sh
@@ -49,7 +49,7 @@ Run the compiled binary with arguments to print to stdout:
 | \t | Tab |
 | \r | Carriage return |
 | \v | Vertical tab |
-| \\ | Backslash |
+| \\\\ | Backslash |
 | \0num | 8-bit octal value |
 
 > [!Note]
